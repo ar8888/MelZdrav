@@ -1,0 +1,6 @@
+build/
+dist/
+move*
+base*
+settings.db
+input/
