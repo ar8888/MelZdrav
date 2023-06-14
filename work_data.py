@@ -14,10 +14,10 @@ def get_list_files():
 
 
 def process(files, stores):
-    header = ["Код отдела", "Наименование отдела", "Операция",
+    header = ["Файл", "Код отдела", "Наименование отдела", "Операция",
               "Код операции", "Номер движ", "Дата движения", "Поставщик",
-              "ИНН Поставщика", "Column7", "Column8", "Column9", "Column10",
-              "Column11", "Column12", "Column13", "Column14", "кОД товара",
+              "ИНН Поставщика", "Номер ккм", "номер чека", "фио кассира", "тип скидки",
+              "сумма скидки", "закупочная сумма по строке чека", "розничная сумма по строке чека", "признак приоритетная рекомендация", "кОД товара",
               "Наименование товара", "код производителя", "производитель", "страна производителя",
               "ШК", "Цена за единицу закупочная в рублях, округление до целых копеек",
               "Цена за единицу розничная в рублях, округление до целых копеек.",
@@ -57,6 +57,7 @@ def process(files, stores):
                 else:
                     oper = ""
                 if line[0] == '0':
+                    fw_base.write(filename+";")
                     fw_base.write(code_store + ";")
                     fw_base.write(name_store + ";")
                     fw_base.write(oper + ";")
@@ -64,6 +65,7 @@ def process(files, stores):
                     fw_base.write(";".join(map(str, line)))
                     fw_base.write("\n")
                 else:
+                    fw_move.write(filename+";")
                     fw_move.write(code_store+";")
                     fw_move.write(name_store+";")
                     fw_move.write(oper+";")
@@ -114,7 +116,7 @@ def check_avail_stores(list_stores_fact, stores):
         cursor.execute(f"select * from replace where code1c='{code1c}'")
         res = cursor.fetchall()
         if len(res) == 0:
-            print(f"Отсутствует аптека в выгрузке {partner1c} код {code1c}")
+            print(f"Отсутствует код аптеки в сопоставлении {partner1c} код {code1c}")
         else:
             for row in res:
                 code_ = row[2]
